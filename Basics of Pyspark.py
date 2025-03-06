@@ -100,3 +100,76 @@ df=spark.read.format('csv').schema(my_struct_schema).option('header',True).load(
 # COMMAND ----------
 
 df.printSchema()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Typecasting
+
+# COMMAND ----------
+
+df.withColumn('Item_Weight',col('Item_Weight').cast(StringType())).display()
+
+# COMMAND ----------
+
+df.printSchema()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Sort/OrderBy
+
+# COMMAND ----------
+
+df.sort(col('Item_Weight').desc()).display()
+
+# COMMAND ----------
+
+df.sort(col('Item_Visibility').asc()).display()
+
+# COMMAND ----------
+
+df.sort(['Item_Weight','Item_Visibility'],ascending=[0,0]).display()
+
+# COMMAND ----------
+
+df.sort(['Item_Weight','Item_Visibility'],ascending=[0,1]).display()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### LIMIT
+
+# COMMAND ----------
+
+df.limit(10).display()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### DROP
+
+# COMMAND ----------
+
+df.drop('Item_Visibility').display()
+
+# COMMAND ----------
+
+df.drop('Item_Visibility','Item_MRP').display()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Drop Duplicates
+
+# COMMAND ----------
+
+df.dropDuplicates().display()
+
+# COMMAND ----------
+
+df.drop_duplicates(subset=['Item_Type']).display()
+
+# COMMAND ----------
+
+df.distinct().display()
